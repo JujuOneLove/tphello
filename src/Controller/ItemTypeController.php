@@ -27,7 +27,7 @@ class ItemTypeController extends AbstractController
     /**
      * @Route("/new", name="item_type_new", methods="GET|POST")
      */
-    public function new(Request $requeste): Response
+    public function new(Request $request): Response
     {
         $itemType = new ItemType();
         $form = $this->createForm(ItemTypeType::class, $itemType);

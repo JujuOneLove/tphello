@@ -12,7 +12,6 @@
                 <th>Name</th>
                 <th>ItemType</th>
                 <th>Quantity</th>
-                <th>Enable</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -23,7 +22,7 @@
                 <td>{{ item.name }}</td>
                 <td>{{ item.itemType }}</td>
                 <td>{{ item.quantity }}</td>
-                <td>{{ item.enable ? 'Yes' : 'No' }}</td>
+
                 <td>
                     <a href="{{ path('item_show', {'id': item.id}) }}">show</a>
                     <a href="{{ path('item_edit', {'id': item.id}) }}">edit</a>

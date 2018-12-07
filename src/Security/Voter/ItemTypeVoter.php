@@ -7,7 +7,6 @@ use App\Entity\User;
 use App\Entity\ItemType;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
-
 use Symfony\Component\Security\Core\Security;
 
 class ItemTypeVoter extends Voter

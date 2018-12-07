@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Item;
+use App\Form\ItemEditType;
 use App\Form\ItemType;
 use App\Entity\ItemType as ItemTypeEntity;
 use App\Repository\ItemRepository;
@@ -60,7 +61,7 @@ class ItemController extends AbstractController
      */
     public function edit(Request $request, Item $item): Response
     {
-        $form = $this->createForm(ItemType::class, $item);
+        $form = $this->createForm(ItemEditType::class, $item);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
