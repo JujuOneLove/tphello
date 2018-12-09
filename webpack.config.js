@@ -39,13 +39,27 @@ Encore
     .enableVersioning(Encore.isProduction())
 
     // enables Sass/SCSS support
-    //.enableSassLoader()
+    .enableSassLoader()
+    // Intégration des fichiers et images statiques
+    .copyFiles({
+        from: './assets/img',
+        to: './img/[name].[ext]'
+    })
+    .copyFiles({
+        from: './assets/svg',
+        to: './svg/[name].[ext]'
+    })
 
     // uncomment if you use TypeScript
     //.enableTypeScriptLoader()
 
     // uncomment if you're having problems with a jQuery plugin
     //.autoProvidejQuery()
+    // Transformation du css pour l'ensemble des navigateurs
+    .enablePostCssLoader((options) => {
+        options.config = {
+            path: 'config/postcss.config.js'
+        };
+    })
 ;
-
 module.exports = Encore.getWebpackConfig();
