@@ -49,7 +49,7 @@ class ItemType extends AbstractType
             $item->setUser($user);
             $form->remove('user');
         }
-        if($item->getId()){
+        if($item->getId() == true){
             $form->remove('name');
             $form->remove('itemType');
         }

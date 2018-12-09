@@ -53,7 +53,9 @@ class UserType extends AbstractType
         }else{
             $form->remove('roles');
         }
-
+        if($user->getId() == false){
+            $user->setMaxWeight(rand ( 200 , 500 ));
+        }
 
         /* ici on peux directement setter des valeur a user ! */
         $user->setEnabled(true);
