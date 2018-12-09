@@ -7,6 +7,7 @@ use App\Form\ItemEditType;
 use App\Form\ItemType;
 use App\Entity\ItemType as ItemTypeEntity;
 use App\Repository\ItemRepository;
+use App\Security\AppAccess;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -53,6 +54,9 @@ class ItemController extends AbstractController
      */
     public function show(Item $item): Response
     {
+        if ($this->isGranted(AppAccess::ITEM_SHOW,$item)===false){
+            return $this->redirectToRoute('item_index');
+        }
         return $this->render('item/show.html.twig', ['item' => $item]);
     }
 
@@ -61,7 +65,7 @@ class ItemController extends AbstractController
      */
     public function edit(Request $request, Item $item): Response
     {
-        $form = $this->createForm(ItemEditType::class, $item);
+        $form = $this->createForm(ItemType::class, $item);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

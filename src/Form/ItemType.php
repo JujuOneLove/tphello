@@ -37,10 +37,6 @@ class ItemType extends AbstractType
             FormEvents::PRE_SET_DATA,
             array($this, 'preSetData')
         );
-        $builder->addEventListener(
-            FormEvents::POST_SUBMIT,
-            array($this, 'postSubmit')
-        );
     }
 
     public function preSetData(FormEvent $event)
@@ -52,6 +48,10 @@ class ItemType extends AbstractType
             $user = $this->token->getToken()->getUser();
             $item->setUser($user);
             $form->remove('user');
+        }
+        if($item->getId()){
+            $form->remove('name');
+            $form->remove('itemType');
         }
 
     }
