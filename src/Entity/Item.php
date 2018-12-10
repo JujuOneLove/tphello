@@ -3,9 +3,12 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\DependencyInjection\Tests\Compiler\I;
+use App\Validator\WeightMax;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ItemRepository")
+ * @App\Validator\WeightMax
  */
 class Item
 {
@@ -54,12 +57,12 @@ class Item
         return $this;
     }
 
-    public function getItemType(): ?int
+    public function getItemType(): ?ItemType
     {
         return $this->itemType;
     }
 
-    public function setItemType(int $itemType): self
+    public function setItemType(ItemType $itemType): self
     {
         $this->itemType = $itemType;
 
