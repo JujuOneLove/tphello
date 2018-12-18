@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
+use App\Upload\FileUserUpload;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,7 +31,7 @@ class UserController extends AbstractController
     /**
      * @Route("/new", name="user_new", methods="GET|POST")
      */
-    public function new(Request $request, UserPasswordEncoderInterface $encoder, TokenStorageInterface $tokenStorage): Response
+    public function new(Request $request, UserPasswordEncoderInterface $encoder, TokenStorageInterface $tokenStorage, FileUserUpload $fileUserUpload): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
@@ -40,7 +41,7 @@ class UserController extends AbstractController
             $mdp = $encoder->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($mdp);
 
-
+            $fileUserUpload->upload($user);
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
@@ -72,7 +73,7 @@ class UserController extends AbstractController
     /**
      * @Route("/{id}/edit", name="user_edit", methods="GET|POST")
      */
-    public function edit(Request $request, User $user, UserPasswordEncoderInterface $encoder): Response
+    public function edit(Request $request, User $user, UserPasswordEncoderInterface $encoder, FileUserUpload $fileUserUpload): Response
     {
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
@@ -83,7 +84,7 @@ class UserController extends AbstractController
                 $mdp = $encoder->encodePassword($user, $user->getPlainPassword());
                 $user->setPassword($mdp);
             }
-
+            $fileUserUpload->upload($user);
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('user_index', ['id' => $user->getId()]);
@@ -98,12 +99,14 @@ class UserController extends AbstractController
     /**
      * @Route("/{id}", name="user_delete", methods="DELETE")
      */
-    public function delete(Request $request, User $user): Response
+    public function delete(Request $request, User $user, FileUserUpload $fileUserUpload): Response
     {
         if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($user);
-            $em->flush();
+            if($fileUserUpload->removeFile($user) === true){
+                $em = $this->getDoctrine()->getManager();
+                $em->remove($user);
+                $em->flush();
+            }
         }
 
         return $this->redirectToRoute('user_index');

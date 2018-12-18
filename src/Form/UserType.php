@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\User;
 use App\Form\Type\RolesType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -33,6 +34,7 @@ class UserType extends AbstractType
             ->add('email')
             ->add('plainPassword')
             ->add('roles', RolesType::class)
+            ->add('pictureFile', FileType::class, array('label' => 'Image'))
             ->add('submit', SubmitType::class, ['label_format' => 'Registration']);
 
         $builder->addEventListener(
@@ -46,7 +48,7 @@ class UserType extends AbstractType
 
         $form = $event->getForm();
         $user = $event->getData();
-
+        $currentUser = $this->token->getToken()->getUser();
         /* @Explain Si Role Super ADMIN alors on ajoute un champ active sinon on enleve le role
          * if($this->securityChecker->isGranted('ROLE_SUPER_ADMIN') === true){
          * $form->add('enabled');
@@ -57,7 +59,14 @@ class UserType extends AbstractType
 
         if($user->getid() !== null){
             $user->setMaxWeight(\rand(200, 500));
+            if(($user->getid() == $currentUser->getid())===false){
+                if($this->securityChecker->isGranted('ROLE_ADMIN') === false){
+                    $form->remove('pictureFile');
+                }
+            }
         }
+
+
 
         /* ici on peux directement setter des valeur a user ! */
         $user->setEnabled(true);

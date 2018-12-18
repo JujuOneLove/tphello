@@ -15,9 +15,11 @@ class CalculateUserWeight{
     }
 
     public function calculate(User $user): ?int{
-
-        $maxWeight = 100;
-
-        return $maxWeight;
+        $lesItems = $this->em->getRepository('App\Entity\Item')->findBy(['user' => $user]);
+        $poidActuel = 0;
+        foreach ($lesItems as $item){
+            $poidActuel += $item->getQuantity() * $item->getItemType()->getWeight();
+        }
+        return $poidActuel;
     }
 }

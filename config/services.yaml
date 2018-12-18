@@ -6,6 +6,7 @@
 parameters:
     locale: 'fr'
     item_type_dir: "%kernel.project_dir%/public/"
+    user_dir: "%kernel.project_dir%/public/"
 
 services:
     # default configuration for services in *this* file
@@ -34,3 +35,7 @@ services:
     App\Upload\FileItemTypeUpload:
         arguments:
             $targetDirectory: '%item_type_dir%'
+
+    App\Upload\FileUserUpload:
+        arguments:
+            $targetDirectory: '%user_dir%'

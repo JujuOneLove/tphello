@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -11,6 +13,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class User implements UserInterface
 {
+    const DIR_UPLOAD = 'user';
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -49,6 +52,21 @@ class User implements UserInterface
      * @ORM\Column(type="string")
      */
     private $password;
+
+    /**
+     *
+     * @Assert\Image(mimeTypes={"image/png", "image/jpeg", "image/gif"},
+     *     maxWidth = 500,
+     *     maxHeight = 500,
+     *     maxSize = "500k")
+     */
+    private $pictureFile;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     *
+     */
+    private $picture;
 
     public function getId(): ?int
     {
@@ -175,5 +193,46 @@ class User implements UserInterface
         $this->maxWeight = $maxWeight;
 
         return $this;
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function getPicture(): ?string
+    {
+        return $this->picture;
+    }
+
+    /**
+     * @param mixed $picture
+     */
+    public function setPicture($picture): self
+    {
+        $this->picture = $picture;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPictureFile()
+    {
+        return $this->pictureFile;
+    }
+
+    /**
+     * @param mixed $pictureFile
+     */
+    public function setPictureFile($pictureFile): self
+    {
+        $this->pictureFile = $pictureFile;
+
+        return $this;
+    }
+
+    public function getPictureWebPath(){
+        return self::DIR_UPLOAD . '/' . $this->getPicture();
     }
 }

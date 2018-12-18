@@ -20,23 +20,35 @@ class ContainsMaxWeightValidator extends ConstraintValidator
         $this->em = $em;
         $this->calculateUserWeight = $calculateUserWeight;
     }
-/*
-    public function validate($item, Constraint $constraint)
-    {
-        if (!$constraint instanceof ContainsMaxWeight) {
-            throw new UnexpectedTypeException($constraint, ContainsMaxWeight::class);
+
+    public function validate($value, Constraint $constraint) {
+        // custom constraints should ignore null and empty values to allow
+        // other constraints (NotBlank, NotNull, etc.) take care of that
+        if (null === $value || '' === $value) {
+            return;
         }
 
+        if (!($value instanceof Item)) {
+            throw new UnexpectedTypeException($value, 'Item');
+        }
 
-        $weightUser = $this->calculateUserWeight->calculate($item->getUser());
-        $weight = 10;
+        if (!$this->isPoidSuffisant($value)) {
+            $this->context->buildViolation($constraint->message)
+                ->setParameter('{{ weight }}', $value->getQuantity())
+                ->addViolation();
+        }
+    }
 
+    private function isPoidSuffisant(Item $value) {
+        // code à écrire
+        $poidActuel = $this->calculateUserWeight->calculate($value->getUser());
 
-        $this->context->buildViolation($constraint->message)
-            ->setParameter('{{ weight }}', $weight)
-            ->addViolation();
+        if(($value->getUser()->getMaxWeight() < $poidActuel + $value->getQuantity() * $value->getItemType()->getWeight()))
+            return false;
+        return true;
+    }
 
-    }*/
+    /*
     public function validate($value, Constraint $constraint) {
         // custom constraints should ignore null and empty values to allow
         // other constraints (NotBlank, NotNull, etc.) take care of that
@@ -65,5 +77,5 @@ class ContainsMaxWeightValidator extends ConstraintValidator
         if($cpt > $max){
             return false;
         }else return true;
-    }
+    }*/
 }
