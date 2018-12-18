@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Validator\Constraints as AssertPerso;
+use App\Validator\Constraints\ContainsMaxWeight;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ItemRepository")

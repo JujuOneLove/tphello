@@ -18,8 +18,6 @@ class CalculateUserWeight{
 
         $maxWeight = 100;
 
-
-
         return $maxWeight;
     }
 }

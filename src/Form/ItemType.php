@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Item;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -36,7 +37,11 @@ class ItemType extends AbstractType
 
         $builder
             ->add('name')
-            ->add('itemType')
+            ->add('itemType', EntityType::class, [
+                'class' => \App\Entity\ItemType::class,
+                'choice_label' => 'name',
+                'data' => $options['itemType']
+            ])
             ->add('quantity')
             ->add('user', null, ['choice_label' => 'email', 'placeholder' => false]);
 
