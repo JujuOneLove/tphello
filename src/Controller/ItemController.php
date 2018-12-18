@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Item;
+use App\Form\ItemEditType;
 use App\Form\ItemType;
 use App\Entity\ItemType as ItemTypeEntity;
 use App\Repository\ItemRepository;
@@ -53,12 +54,7 @@ class ItemController extends AbstractController
      */
     public function show(Item $item): Response
     {
-        if($this->isGranted(AppAccess::ITEM_SHOW, $item) === true){
-            return $this->render('item/show.html.twig', ['item' => $item]);
-        }else{
-            $this->addFlash('error', 'Vous n\'avez pas accès à cet item');
-            return $this->redirectToRoute('item_index');
-        }
+        return $this->render('item/show.html.twig', ['item' => $item]);
     }
 
     /**
@@ -66,8 +62,6 @@ class ItemController extends AbstractController
      */
     public function edit(Request $request, Item $item): Response
     {
-        $this->denyAccessUnlessGranted(AppAccess::ITEM_EDIT, $item);
-
         $form = $this->createForm(ItemType::class, $item);
         $form->handleRequest($request);
 
@@ -88,8 +82,6 @@ class ItemController extends AbstractController
      */
     public function delete(Request $request, Item $item): Response
     {
-        $this->denyAccessUnlessGranted(AppAccess::ITEM_DELETE, $item);
-
         if ($this->isCsrfTokenValid('delete'.$item->getId(), $request->request->get('_token'))) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($item);

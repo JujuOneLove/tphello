@@ -1,0 +1,24 @@
+body,
+html {
+  height : 100%;
+  width : 100%;
+}
+
+* {
+  box-sizing : border-box;
+}
+/*TP HELLO*/
+body {
+  background-color: lightgray;
+}
+h1{
+  color: purple;
+}
+h2{
+  color: blue;
+}
+.panel{
+  padding: 20px;
+  margin: 20px;
+  border: 2PX SOLID rebeccapurple;
+}

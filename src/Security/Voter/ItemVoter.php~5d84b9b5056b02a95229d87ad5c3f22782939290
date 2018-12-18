@@ -20,9 +20,10 @@ class ItemVoter extends Voter
 
     protected function supports($attribute, $subject)
     {
-        if (!in_array($attribute, [AppAccess::ITEM_SHOW, AppAccess::ITEM_EDIT, AppAccess::ITEM_DELETE])){
+        if (!in_array($attribute,array(AppAccess::ITEM_SHOW,AppAccess::ITEM_EDIT,AppAccess::ITEM_DELETE))){
             return false;
         }
+
         if (!$subject instanceof Item) {
             return false;
         }
@@ -43,12 +44,8 @@ class ItemVoter extends Voter
             return true;
         }
 
-        switch ($attribute){
-            case AppAccess::ITEM_DELETE:
-            case AppAccess::ITEM_EDIT:
-            case AppAccess::ITEM_SHOW:
-                return $subject->getUser()->getId() === $user->getId();
-                break;
-        }
+
+        return $subject->getUser()->getId() === $user->getId();
+
     }
 }
