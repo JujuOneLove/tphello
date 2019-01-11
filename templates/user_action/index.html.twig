@@ -13,7 +13,9 @@
             {% set damage = weaponUser.quality *  weaponUser.weapon.damage %}
             <h2 {% if weaponUser.active is same as(true) %} class="active" {% endif %}>Name
                 : {{ weaponUser.weapon.name }} - Ammu : {{ weaponUser.ammunition }} - DMG :{{ damage }} <a
-                        href="{{ path('user_action_load', {'id': weaponUser.id}) }}">Load</a><a
+                        href="{{ path('user_action_load', {'id': weaponUser.id}) }}">Load</a>{% if weaponUser.active is same as(true) %}<a
+                        href="{{ path('user_action_tidy', {'id': weaponUser.id}) }}">Tidy</a><a
+                        href="{{ path('user_action_shootvide') }}">Tirer à vide</a>{% endif %}<a
                         href="{{ path('user_action_reload', {'id': weaponUser.id}) }}">Reload</a></h2>
         {% endfor %}
     </div>
@@ -21,9 +23,16 @@
 
     <div class="panel">
         {% for user in users %}
-            <h2 {% if user.health is same as(constant('App\\Entity\\User::HEALT')) %} class="active" {% endif %}>Name
-                : {{ user.email }} - <span class="point">{{ user.health }}PV</span><a
-                        href="{{ path('user_action_shoot', {'id': user.id}) }}">Shoot</a></h2>
+            <h2 {% if user.health is same as(constant('App\\Entity\\User::HEALT')) %} class="active" {% endif %}>Name : {{ user.email }} - <span class="point">{{ user.health }}PV</span>
+                {% if user.health > 0 %}
+                    <a href="{{ path('user_action_shoot', {'id': user.id}) }}">Shoot</a>
+                    {% if user.health is not same as(constant('App\\Entity\\User::HEALT')) %}
+                        <a href="{{ path('user_action_heal', {'id': user.id}) }}">Heal</a>
+                    {% endif %}
+                {% else %}
+                    <span>DEAD</span>
+                {% endif %}
+            </h2>
         {% endfor %}
     </div>
 
