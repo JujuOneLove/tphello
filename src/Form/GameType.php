@@ -16,8 +16,8 @@ class GameType extends AbstractType
             ->add('scoreTeamB')
             ->add('date')
             ->add('rating')
-            ->add('teamA')
-            ->add('teamB')
+            ->add('teamA', \App\Form\Type\TeamType::class)
+            ->add('teamB', \App\Form\Type\TeamType::class)
         ;
     }
 
