@@ -41,7 +41,6 @@ class UserActionController extends AbstractController
      */
     public function reload(WeaponUser $weaponUser, ReloadWeapon $reloadWeapon): Response
     {
-        dump($this->getUser());die;
 
         $reloadWeapon->reload($weaponUser);
 
