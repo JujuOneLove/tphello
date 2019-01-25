@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bet{% endblock %}
+
+{% block body %}
+    <h1>Bet</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ bet.id }}</td>
+            </tr>
+            <tr>
+                <th>ScoreTeamA</th>
+                <td>{{ bet.scoreTeamA }}</td>
+            </tr>
+            <tr>
+                <th>ScoreTeamB</th>
+                <td>{{ bet.scoreTeamB }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ bet.date ? bet.date|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Amout</th>
+                <td>{{ bet.amout }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('bet_index') }}">back to list</a>
+
+    <a href="{{ path('bet_edit', {'id': bet.id}) }}">edit</a>
+
+    {{ include('bet/_delete_form.html.twig') }}
+{% endblock %}
