@@ -29,6 +29,7 @@ class ScoreType extends AbstractType
                 '11',
                 '12'
             ],
+            'attr' => ['onChange' => 'changeColor(this.value)']
         ]);
     }
     public function getParent(){

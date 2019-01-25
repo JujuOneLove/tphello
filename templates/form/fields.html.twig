@@ -1,2 +1,32 @@
 {% extends "form_div_layout.html.twig" %}
 
+{% block score_widget %}
+
+    {{- block('form') -}}
+
+    <div id="color-quality">
+        -
+    </div>
+
+    <script>
+        function changeColor(value){
+            console.log(value);
+            let color = '#FFFFFF';
+            console.log(color);
+            if(value == 0){
+                color = 'black';
+                console.log(color);
+            }else if((value>=1)&&(value<=5)){
+                color = 'blue';
+            }
+            else if((value>=6)&&(value<=9)){
+                color = 'purple';
+            }
+            else if((value>=10)&&(value<=12)){
+                color = 'green';
+            }
+            document.getElementById('color-quality').style.backgroundColor = color;
+        }
+    </script>
+
+{% endblock score_widget %}
