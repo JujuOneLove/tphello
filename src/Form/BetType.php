@@ -12,8 +12,8 @@ class BetType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('scoreTeamA')
-            ->add('scoreTeamB')
+            ->add('scoreTeamA', \App\Form\Type\ScoreType::class)
+            ->add('scoreTeamB', \App\Form\Type\ScoreType::class)
             ->add('date')
             ->add('amout')
             ->add('user')
