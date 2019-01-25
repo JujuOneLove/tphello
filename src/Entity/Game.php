@@ -33,9 +33,8 @@ class Game
      * @Assert\Range(
      *      min = 0,
      *      max = 12,
-     *      minMessage = "You must be at least {{ limit }}cm tall to enter",
-     *      maxMessage = "You cannot be taller than {{ limit }}cm to enter"
-     *
+     *      minMessage = "Le score Minimum est {{ limit }}",
+     *      maxMessage = "Le score Maximum est {{ limit }}")
      * @ORM\Column(type="integer", nullable=true)
      */
     private $scoreTeamA;
@@ -44,8 +43,8 @@ class Game
      * @Assert\Range(
      *      min = 0,
      *      max = 12,
-     *      minMessage = "You must be at least {{ limit }}cm tall to enter",
-     *      maxMessage = "You cannot be taller than {{ limit }}cm to enter"
+     *      minMessage = "Le score Minimum est {{ limit }}",
+     *      maxMessage = "Le score Maximum est {{ limit }}")
      * @ORM\Column(type="integer", nullable=true)
      */
     private $scoreTeamB;
@@ -135,5 +134,9 @@ class Game
         $this->rating = $rating;
 
         return $this;
+    }
+    public function __toString()
+    {
+        return $this->teamA.' - '.$this->teamB;
     }
 }

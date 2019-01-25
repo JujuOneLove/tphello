@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\BetRepository")
@@ -27,11 +28,21 @@ class Bet
     private $game;
 
     /**
+     * @Assert\Range(
+     *      min = 0,
+     *      max = 12,
+     *      minMessage = "Le score Minimum est {{ limit }}",
+     *      maxMessage = "Le score Maximum est {{ limit }}")
      * @ORM\Column(type="integer")
      */
     private $scoreTeamA;
 
     /**
+     @Assert\Range(
+     *      min = 0,
+     *      max = 12,
+     *      minMessage = "Le score Minimum est {{ limit }}",
+     *      maxMessage = "Le score Maximum est {{ limit }}")
      * @ORM\Column(type="integer")
      */
     private $scoreTeamB;
@@ -121,5 +132,10 @@ class Bet
         $this->amout = $amout;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return "BET : ".$this->id;
     }
 }
