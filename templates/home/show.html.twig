@@ -3,18 +3,10 @@
 {% block title %}Game{% endblock %}
 
 {% block body %}
-    <h1>Game</h1>
+    <h1>Match {{ game.TeamA }} - {{ game.TeamB }}</h1>
 
     <table class="table">
         <tbody>
-            <tr>
-                <th>TeamA</th>
-                <td>{{ game.TeamA }}</td>
-            </tr>
-            <tr>
-                <th>TeamB</th>
-                <td>{{ game.TeamB }}</td>
-            </tr>
             <tr>
                 <th>ScoreTeamA</th>
                 <td>{{ game.scoreTeamA }}</td>
@@ -33,10 +25,10 @@
             </tr>
         </tbody>
     </table>
+    {% if is_granted('ROLE_USER') %}
+        <a href="">Parier</a>
+    {% endif %}
 
-    <a href="{{ path('game_index') }}">back to list</a>
+    <a href="{{ path('home_match') }}">Voir Tous les matchs</a>
 
-    <a href="{{ path('game_edit', {'id': game.id}) }}">edit</a>
-
-    {{ include('game/_delete_form.html.twig') }}
 {% endblock %}
