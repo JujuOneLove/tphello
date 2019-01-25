@@ -29,7 +29,7 @@
                 <td>
                     <a href="{{ path('home_show', {'id': game.id}) }}">Voir le Match en détail</a>
                     {% if is_granted('ROLE_USER') %}
-                        <a href="">Parier</a>
+                        <a href="{{ path('bet_new') }}">Parier</a>
                     {% endif %}
                 </td>
             </tr>

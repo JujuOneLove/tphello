@@ -26,7 +26,7 @@
         </tbody>
     </table>
     {% if is_granted('ROLE_USER') %}
-        <a href="">Parier</a>
+        <a href="{{ path('home_pariershow', {'id': game.id}) }}">Parier</a>
     {% endif %}
 
     <a href="{{ path('home_match') }}">Voir Tous les matchs</a>
