@@ -4,10 +4,12 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Validator;
 
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\GameRepository")
+ * @App\Validator\Team
  */
 class Game
 {
