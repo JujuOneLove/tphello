@@ -21,7 +21,7 @@
                 <td>{{ team.name }}</td>
                 <td>{{ team.flag }}</td>
                 <td>
-                    <a href="{{ path('game_new', {'id': team.id}) }}">Créer un match pour cette équipe</a>
+                    <a href="{{ path('game_new', {'teamA': team.id}) }}">Créer un match pour cette équipe</a>
                 </td>
             </tr>
         {% endfor %}

@@ -3,9 +3,12 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Validator;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\GameRepository")
+ * @App\Validator\NotSameTeam
  */
 class Game
 {
