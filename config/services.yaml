@@ -44,3 +44,7 @@ services:
     App\EventListener\LoginListener:
         tags:
             - { name: kernel.event_listener, event: user.create, priority: 0 }
+
+    App\EventListener\ActionUserListener:
+        tags:
+            - { name: kernel.event_listener, event: app.actionUser.create, method: 'onActionUserCreate', priority: 0 }
