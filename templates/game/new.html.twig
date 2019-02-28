@@ -5,7 +5,7 @@
 {% block body %}
     <h1>Create new Game</h1>
 
-    {% if team is defined %}
+    {% if team != null %}
         <h2>{% trans with {'%team%': team.name} %}game.new.choiceopponent{% endtrans %}</h2>
     {% endif %}
 
