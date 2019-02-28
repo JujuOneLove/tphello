@@ -4,6 +4,7 @@ namespace App\Controller;
 
 
 use App\Entity\ActionUser;
+use App\Form\Type\ActionUserType;
 use App\Repository\GameRepository;
 use App\Repository\TeamRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,6 +16,7 @@ use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class HomeController extends AbstractController
@@ -33,7 +35,7 @@ class HomeController extends AbstractController
     public function game(Request $request){
 
         $builder = $this->createFormBuilder();
-        $builder->add('action', ChoiceType::class, ['choices' => ['LEFT' => 'LEFT', 'TOP' => 'TOP', 'RIGHT' => 'RIGHT', 'BOTTOM' => 'BOTTOM']]);
+        $builder->add('action', ActionUserType::class);
         $builder->add('submit', SubmitType::class, ['label' => 'Valid direction']);
         $form = $builder->getForm();
 
