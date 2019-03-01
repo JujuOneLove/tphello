@@ -39,15 +39,4 @@ class ActionUserListener
         $this->entityManager->flush();
     }
 
-    public function onReset()
-    {
-        $user = $this->tokenStorage->getToken()->getUser();
-        if(($user->getPoistionX()>10)||($user->getPoistionY()>10)){
-            $user->setPositionX(0);
-            $user->setPositionY(0);
-        }
-        $this->entityManager->persist($user);
-        $this->entityManager->flush();
-    }
-
 }
