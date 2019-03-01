@@ -56,10 +56,8 @@ class HomeController extends AbstractController
     /**
      * @Route("/reset", name="home_reset", methods="GET|POST")
      */
-    public function reset(Request $request){
-
-        //@todo
-
+    public function reset(Request $request, EventDispatcherInterface $dispatcher){
+        $dispatcher->dispatch(AppEvent::ActionUserReset);
         return $this->redirectToRoute('home_game');
     }
 }

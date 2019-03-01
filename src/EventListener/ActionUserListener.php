@@ -27,7 +27,7 @@ class ActionUserListener
             $user->setPositionX($user->getPositionX()-1);
         }
         elseif($event->getActionUser()->getDirection() == "BOTTOM"){
-            $user->setPositionY($user->getPositionX()-1);
+            $user->setPositionY($user->getPositionY()-1);
         }
         elseif($event->getActionUser()->getDirection() == "TOP"){
             $user->setPositionY($user->getPositionY()+1);

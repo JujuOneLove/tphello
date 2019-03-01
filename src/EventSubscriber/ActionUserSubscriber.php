@@ -3,57 +3,46 @@
 namespace App\EventSubscriber;
 
 use App\Event\AppEvent;
-use App\Event\UserEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Security\Core\AuthenticationEvents;
-use Symfony\Component\Security\Http\SecurityEvents;
-use Symfony\Component\Security\Core\Event\AuthenticationFailureEvent;
-use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class ActionUserSubscriber implements EventSubscriberInterface{
 
-    private $encoder;
     private $entityManager;
+    private $tokenStorage;
 
-    public function __construct(UserPasswordEncoderInterface $encoder, EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager,TokenStorageInterface $tokenStorage)
     {
-        $this->encoder = $encoder;
+        $this->tokenStorage = $tokenStorage;
         $this->entityManager = $entityManager;
     }
 
     public static function getSubscribedEvents()
     {
         return [
-            AppEvent::UserEdit => [['userPersist', 0], ['userEditPassword', 128]], //celui le plus haut repond avant le plus bas
-            AuthenticationEvents::AUTHENTICATION_FAILURE => 'onAuthenticationFailure',
-            SecurityEvents::INTERACTIVE_LOGIN => 'onSecurityInteractiveLogin',
+            AppEvent::ActionUserCreate => 'onReset',
+            AppEvent::ActionUserReset => 'onResetButton'
         ];
     }
 
-    public function onAuthenticationFailure( AuthenticationFailureEvent $event )
+    public function onResetButton()
     {
-
-        echo 'failed login ! ';
-    }
-
-    public function onSecurityInteractiveLogin( InteractiveLoginEvent $event )
-    {
-         echo 'login ok ! : '.$event->getAuthenticationToken()->getUser()->getEmail();
-    }
-
-    public function actionUserPersist(UserEvent $event){
-
-        $this->entityManager->persist($event->getUser());
+        $user = $this->tokenStorage->getToken()->getUser();
+        $user->setPositionX(0);
+        $user->setPositionY(0);
+        $this->entityManager->persist($user);
         $this->entityManager->flush();
     }
 
-    public function userEditPassword(UserEvent $event){
-
-        if($event->getUser()->getPlainPassword() !== ''){
-            $mdp = $this->encoder->encodePassword($event->getUser(), $event->getUser()->getPlainPassword());
-            $event->getUser()->setPassword($mdp);
+    public function onReset()
+    {
+        $user = $this->tokenStorage->getToken()->getUser();
+        if(($user->getPositionX()>10)||($user->getPositionY()>10)||($user->getPositionX()<-10)||($user->getPositionY()<-10)){
+            $user->setPositionX(0);
+            $user->setPositionY(0);
+            $this->entityManager->persist($user);
+            $this->entityManager->flush();
         }
     }
 }
