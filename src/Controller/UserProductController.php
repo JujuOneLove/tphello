@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Product;
 use App\Entity\UserProduct;
 use App\Form\UserProductType;
 use App\Repository\UserProductRepository;
@@ -11,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/user/product")
+ * @Route("/user-product")
  */
 class UserProductController extends AbstractController
 {
@@ -26,12 +27,12 @@ class UserProductController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="user_product_new", methods={"GET","POST"})
+     * @Route("/new/{idP}", name="user_product_new", methods={"GET","POST"}, defaults={"idP"=null})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, Product $idP = null): Response
     {
         $userProduct = new UserProduct();
-        $form = $this->createForm(UserProductType::class, $userProduct);
+        $form = $this->createForm(UserProductType::class, $userProduct, ['idP'=>$idP]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

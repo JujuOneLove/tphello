@@ -26,7 +26,7 @@
                 <td>{{ product.quantity }}</td>
                 <td>
                     {% if is_granted('ROLE_USER') %}
-                        <button><a href="{{ path('product_index') }}">Ajouter au panier</a></button>
+                        <button><a href="{{ path('user_product_new',{'idP': product.id}) }}">Ajouter au panier</a></button>
                     {% endif %}                    <a href="{{ path('product_show', {'id': product.id}) }}">show</a>
                     <a href="{{ path('product_edit', {'id': product.id}) }}">edit</a>
                 </td>

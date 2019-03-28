@@ -141,4 +141,9 @@ class Product
     public function getPictureWebPath(){
         return self::DIR_UPLOAD . '/' . $this->getPicture();
     }
+
+    public function __toString()
+    {
+        return $this->name;
+    }
 }
