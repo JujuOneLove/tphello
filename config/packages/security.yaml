@@ -48,4 +48,7 @@ security:
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/game, roles: ROLE_USER }
-        #- { path: ^/user, roles: ROLE_USER }
+        - { path: ^/user/product, roles: ROLE_USER }
+        - { path: ^/product/new, roles: ROLE_ADMIN }
+        - { path: ^/product/[0-9]+/edit, roles: ROLE_ADMIN }
+        - { path: ^/product/[0-9]+, roles: ROLE_ADMIN }
