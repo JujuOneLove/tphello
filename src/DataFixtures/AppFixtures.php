@@ -2,10 +2,9 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Game;
-use App\Entity\Team;
+use App\Entity\Product;
 use App\Entity\User;
-use App\Entity\Weapon;
+use App\Entity\UserProduct;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -42,6 +41,54 @@ class AppFixtures extends Fixture {
         $user1->setPassword($this->passwordEncoder->encodePassword($user1,'user2@user.fr'));
         $manager->persist($user1);
 
+        $product1 = new Product();
+        $product1->setName("Lait");
+        $product1->setPrice(15.55);
+        $product1->setCreatedAt(new \DateTime('@'.strtotime('now')));
+        $product1->setQuantity(10);
+        $manager->persist($product1);
+
+        $product2 = new Product();
+        $product2->setName("Eau");
+        $product2->setPrice(12.55);
+        $product2->setCreatedAt(new \DateTime('@'.strtotime('now')));
+        $product2->setQuantity(10);
+        $manager->persist($product2);
+
+        $product = new Product();
+        $product->setName("Bière");
+        $product->setPrice(25.55);
+        $product->setCreatedAt(new \DateTime('@'.strtotime('now')));
+        $product->setQuantity(10);
+        $manager->persist($product);
+
+        $product = new Product();
+        $product->setName("Mere");
+        $product->setPrice(150.55);
+        $product->setCreatedAt(new \DateTime('@'.strtotime('now')));
+        $product->setQuantity(10);
+        $manager->persist($product);
+
+        $product = new Product();
+        $product->setName("Kebab");
+        $product->setPrice(9.55);
+        $product->setCreatedAt(new \DateTime('@'.strtotime('now')));
+        $product->setQuantity(10);
+        $manager->persist($product);
+
+        $userP = new UserProduct();
+        $userP->setQuantity(5);
+        $userP->setProduct($product1);
+        $userP->setUser($user1);
+        $userP->setCreatedAt(new \DateTime('@'.strtotime('now')));
+        $manager->persist($userP);
+
+        $userP = new UserProduct();
+        $userP->setQuantity(5);
+        $userP->setProduct($product2);
+        $userP->setUser($user1);
+        $userP->setCreatedAt(new \DateTime('@'.strtotime('now')));
+        $manager->persist($userP);
 
         $manager->flush();
     }
