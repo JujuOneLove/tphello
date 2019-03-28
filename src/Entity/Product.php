@@ -3,12 +3,14 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
  */
 class Product
 {
+    const DIR_UPLOAD = 'product';
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -35,6 +37,18 @@ class Product
      * @ORM\Column(type="integer")
      */
     private $quantity;
+    /**
+     *
+     * @Assert\File(mimeTypes={"image/png", "image/jpeg", "image/gif"})
+     */
+    private $pictureFile;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     *
+     */
+    private $picture;
+
 
     public function getId(): ?int
     {
@@ -87,5 +101,44 @@ class Product
         $this->quantity = $quantity;
 
         return $this;
+    }
+    /**
+     * @return mixed
+     */
+    public function getPicture(): ?string
+    {
+        return $this->picture;
+    }
+
+    /**
+     * @param mixed $picture
+     */
+    public function setPicture($picture): self
+    {
+        $this->picture = $picture;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPictureFile()
+    {
+        return $this->pictureFile;
+    }
+
+    /**
+     * @param mixed $pictureFile
+     */
+    public function setPictureFile($pictureFile): self
+    {
+        $this->pictureFile = $pictureFile;
+
+        return $this;
+    }
+
+    public function getPictureWebPath(){
+        return self::DIR_UPLOAD . '/' . $this->getPicture();
     }
 }

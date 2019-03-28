@@ -4,8 +4,10 @@ namespace App\Form;
 
 use App\Entity\Product;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+
 
 class ProductType extends AbstractType
 {
@@ -16,6 +18,8 @@ class ProductType extends AbstractType
             ->add('price')
             ->add('createdAt')
             ->add('quantity')
+            ->add('pictureFile', FileType::class, array('label' => 'Image'))
+
         ;
     }
 
