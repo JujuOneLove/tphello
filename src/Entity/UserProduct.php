@@ -3,9 +3,11 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Validator\Quantity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserProductRepository")
+ * @App\Validator\Quantity
  */
 class UserProduct
 {
