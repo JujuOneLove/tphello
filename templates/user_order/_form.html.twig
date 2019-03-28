@@ -2,3 +2,24 @@
     {{ form_widget(form) }}
     <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
+
+<script>
+    function changeColor() {
+        value = document.getElementsByTagName('Label').text;
+        let color = '#FFFFFF';
+        if (document.getElementById('user_order_discount_0').checked) {
+            color = '#000000';
+        } else if (document.getElementById('user_order_discount_1').checked) {
+            color = '#330000';
+        } else if (document.getElementById('user_order_discount_2').checked) {
+            color = '#550000';
+        } else if (document.getElementById('user_order_discount_3').checked) {
+            color = '#880000';
+        } else if (document.getElementById('user_order_discount_4').checked) {
+            color = '#BB0000';
+        } else if (document.getElementById('user_order_discount_5').checked) {
+            color = '#FF0000';
+        }
+        document.getElementById('user_order_discount').style.backgroundColor = color;
+    }
+</script>

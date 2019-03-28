@@ -16,8 +16,9 @@ class DiscountType extends AbstractType
                 '30' => '30',
                 '50' => '50'
             ],
+            'attr' => ['onChange' => 'changeColor()'],
             'multiple' => false,
-            'expanded' => true
+            'expanded' => true,
         ]);
     }
     public function getParent(){
