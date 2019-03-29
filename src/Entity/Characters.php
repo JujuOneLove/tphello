@@ -3,12 +3,16 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CharactersRepository")
  */
 class Characters
 {
+    const DIR_UPLOAD = 'characters';
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -26,6 +30,18 @@ class Characters
      * @ORM\JoinColumn(nullable=false)
      */
     private $role;
+    /**
+     *
+     * @Assert\File(mimeTypes={"image/png", "image/jpeg", "image/gif"})
+     */
+    private $pictureFile;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     *
+     */
+    private $picture;
+
 
     public function getId(): ?int
     {
@@ -55,9 +71,50 @@ class Characters
 
         return $this;
     }
-    
+
     public function __toString()
     {
-        return $this->getRole()->getName() .' : ' .$this->name;
+        return $this->getRole()->getName() . ' : ' . $this->name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPicture(): ?string
+    {
+        return $this->picture;
+    }
+
+    /**
+     * @param mixed $picture
+     */
+    public function setPicture($picture): self
+    {
+        $this->picture = $picture;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPictureFile()
+    {
+        return $this->pictureFile;
+    }
+
+    /**
+     * @param mixed $pictureFile
+     */
+    public function setPictureFile($pictureFile): self
+    {
+        $this->pictureFile = $pictureFile;
+
+        return $this;
+    }
+
+    public function getPictureWebPath()
+    {
+        return self::DIR_UPLOAD . '/' . $this->getPicture();
     }
 }

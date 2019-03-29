@@ -12,6 +12,7 @@
             <th>Id</th>
             <th>Name</th>
             <th>Role</th>
+            <th>Picture</th>
             <th>actions</th>
 
         </tr>
@@ -22,6 +23,8 @@
                 <td>{{ character.id }}</td>
                 <td>{{ character.name }}</td>
                 <td>{{ character.role }}</td>
+                <td><img src="{{ base_url }}{{ character.pictureWebPath }}"  alt=""/></td>
+
 
                 {% if is_granted('ROLE_ADMIN') %}
                     <td>

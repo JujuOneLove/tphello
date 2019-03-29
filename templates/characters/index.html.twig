@@ -11,6 +11,7 @@
                 <th>Id</th>
                 <th>Name</th>
                 <th>actions</th>
+                <th>Picture</th>
             </tr>
         </thead>
         <tbody>
@@ -18,6 +19,7 @@
             <tr>
                 <td>{{ character.id }}</td>
                 <td>{{ character.name }}</td>
+                <td><img src="{{ base_url }}{{ character.pictureWebPath }}" /></td>
                 <td>
                     <a href="{{ path('characters_show', {'id': character.id}) }}">show</a>
                     <a href="{{ path('characters_edit', {'id': character.id}) }}">edit</a>
