@@ -3,9 +3,12 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Validator\UserCharacters as UserCharactersValid;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserCharactersRepository")
+ * @App\Validator\UserCharacters
  */
 class UserCharacters
 {
