@@ -30,7 +30,7 @@ class UserCharactersType extends AbstractType
             ->add('favorite')
             ->add('defaultCharacter')
             ->add('user')
-            ->add('characters')
+            ->add('characters',\App\Form\Type\CharactersType::class)
         ;
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
