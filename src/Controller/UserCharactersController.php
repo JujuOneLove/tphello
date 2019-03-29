@@ -33,7 +33,7 @@ class UserCharactersController extends AbstractController
         return $this->render('user_characters/index.html.twig', [
             'games' => $game,
             'user_characters' => $userCharacters,
-            'characters' => $charactersRepository->findAll(),
+            'characters' => $charactersRepository->findBy([], ['role' => 'ASC', 'name' => 'ASC'])
         ]);
     }
 
