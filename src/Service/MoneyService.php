@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\;
+namespace App\Service;
 
 use App\Controller\UserOrderController;
 use App\Entity\UserOrder;
