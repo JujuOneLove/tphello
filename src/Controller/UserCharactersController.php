@@ -13,6 +13,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 /**
  * @Route("/user-characters")
@@ -22,13 +24,19 @@ class UserCharactersController extends AbstractController
     /**
      * @Route("/", name="user_characters_index", methods={"GET"})
      */
-    public function index(UserCharactersRepository $userCharactersRepository, CharactersRepository $charactersRepository, GameRepository $gameRepository,RoleRepository $roleRepository): Response
+    public function index(UserCharactersRepository $userCharactersRepository, CharactersRepository $charactersRepository, GameRepository $gameRepository, TokenStorageInterface $token): Response
     {
+        $user = $token->getToken()->getUser();
+        $userCharacters = $userCharactersRepository->findby(array('user' => $user));
+        $game = $gameRepository->findby(array('userCharacters' => $userCharacters));
+        $characters = [];
+        foreach ($userCharacters as $uc){
+            $characters [] = $uc->getCharacters();
+        }
         return $this->render('user_characters/index.html.twig', [
-            'games' => $gameRepository->findAll(),
-            'user_characters' => $userCharactersRepository->findAll(),
-            'characters' => $charactersRepository->findAll(),
-            'roles' => $roleRepository->findAll()
+            'games' => $game,
+            'user_characters' => $userCharacters,
+            'characters' => $characters,
         ]);
     }
 
