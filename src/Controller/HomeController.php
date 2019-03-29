@@ -82,9 +82,31 @@ class HomeController extends AbstractController
     public function serializePlus(Request $request, SerializerInterface $serializer, $choice = null): Response
     {
         $em = $this->getDoctrine()->getManager();
-
+        $users = $em->getRepository(User::class)->findAll();
         $response = new Response();
         $response->headers->set('Content-Type', 'application/json');
+        switch ($choice){
+            case 1:
+                $response->setContent($serializer->serialize($serializer->normalize($users, null, ['attributes' => ['username']]), 'json'));
+                break;
+            case 2:
+                $response->setContent($serializer->serialize($serializer->normalize($users, null, ['attributes' => ['username']]), 'xml'));
+                $response->headers->set('Content-Type', 'application/xml');
+                break;
+            case 3:
+                $response->setContent($serializer->serialize($users, 'xml'));
+                $response->headers->set('Content-Type', 'application/xml');
+                break;
+            case 4:
+                $response->setContent($serializer->serialize($users, 'json', ['groups' => 'users']));
+                break;
+            case 5:
+                $response->setContent($serializer->serialize($serializer->normalize($users, null, ['groups' => 'user']), 'json'));
+                break;
+            default:
+                $response->setContent($serializer->serialize( $users, 'json'));
+                break;
+        }
         return $response;
     }
 
