@@ -67,14 +67,11 @@
                 <td>{{ user_character.characters }}</td>
                 <td>{{ user_character.characters.role }}</td>
 
-                {% if is_granted('ROLE_ADMIN') %}
-
                     <td>
                         <a href="{{ path('user_characters_show', {'id': user_character.id}) }}">show</a>
                         <a href="{{ path('user_characters_edit', {'id': user_character.id}) }}">edit</a>
                         <a href="{{ path('game_new', {'id': user_character.id}) }}">Créer une partie</a>
                     </td>
-                {% endif %}
             </tr>
         {% else %}
             <tr>
