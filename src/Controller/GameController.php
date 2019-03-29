@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Game;
+use App\Entity\UserCharacters;
 use App\Form\GameType;
 use App\Repository\GameRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,12 +27,12 @@ class GameController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="game_new", methods={"GET","POST"})
+     * @Route("/new/{id}", name="game_new", methods={"GET","POST"}, defaults={"id"=null})
      */
-    public function new(Request $request): Response
+    public function new(Request $request,UserCharacters $id = null): Response
     {
         $game = new Game();
-        $form = $this->createForm(GameType::class, $game);
+        $form = $this->createForm(GameType::class, $game, ['id'=>$id]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
