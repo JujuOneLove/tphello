@@ -12,6 +12,8 @@
             <th>Id</th>
             <th>Name</th>
             <th>actions</th>
+            <th>Role</th>
+
         </tr>
         </thead>
         <tbody>
@@ -19,6 +21,8 @@
             <tr>
                 <td>{{ character.id }}</td>
                 <td>{{ character.name }}</td>
+                <td>{{ character.role }}</td>
+
                 {% if is_granted('ROLE_ADMIN') %}
                     <td>
                         <a href="{{ path('characters_show', {'id': character.id}) }}">show</a>
@@ -34,18 +38,19 @@
         </tbody>
     </table>
 
-    <hr><hr>
+    <hr>
+    <hr>
 
     <h1>UserCharacters index</h1>
     <table class="table">
         <thead>
-            <tr>
-                <th>Id</th>
-                <th>user</th>
-                <th>CreatedAt</th>
-                <th>Favorite</th>
-                <th>actions</th>
-            </tr>
+        <tr>
+            <th>Id</th>
+            <th>user</th>
+            <th>CreatedAt</th>
+            <th>Favorite</th>
+            <th>actions</th>
+        </tr>
         </thead>
         <tbody>
         {% for user_character in user_characters %}
@@ -56,11 +61,11 @@
                 <td>{{ user_character.favorite ? 'Yes' : 'No' }}</td>
                 {% if is_granted('ROLE_ADMIN') %}
 
-                <td>
-                    <a href="{{ path('user_characters_show', {'id': user_character.id}) }}">show</a>
-                    <a href="{{ path('user_characters_edit', {'id': user_character.id}) }}">edit</a>
-                    <a href="{{ path('game_new', {'id': user_character.id}) }}">Créer une partie</a>
-                </td>
+                    <td>
+                        <a href="{{ path('user_characters_show', {'id': user_character.id}) }}">show</a>
+                        <a href="{{ path('user_characters_edit', {'id': user_character.id}) }}">edit</a>
+                        <a href="{{ path('game_new', {'id': user_character.id}) }}">Créer une partie</a>
+                    </td>
                 {% endif %}
             </tr>
         {% else %}
@@ -72,10 +77,11 @@
     </table>
     {% if is_granted('ROLE_ADMIN') %}
 
-    <a href="{{ path('user_characters_new') }}">Create new</a>
+        <a href="{{ path('user_characters_new') }}">Create new</a>
 
-{% endif %}
-    <hr><hr>
+    {% endif %}
+    <hr>
+    <hr>
     <h1>Game index</h1>
 
     <table class="table">
@@ -101,13 +107,13 @@
                 <td>{{ game.damage }}</td>
                 {% if is_granted('ROLE_ADMIN') %}
 
-                <td>
-                    <a href="{{ path('game_show', {'id': game.id}) }}">show</a>
-                    <a href="{{ path('game_edit', {'id': game.id}) }}">edit</a>
-                    <a href="#">@Hackme - Shoot</a>
-                    <a href="#">@Hackme - End game</a>
-                </td>
-                {%  endif %}
+                    <td>
+                        <a href="{{ path('game_show', {'id': game.id}) }}">show</a>
+                        <a href="{{ path('game_edit', {'id': game.id}) }}">edit</a>
+                        <a href="#">@Hackme - Shoot</a>
+                        <a href="#">@Hackme - End game</a>
+                    </td>
+                {% endif %}
             </tr>
         {% else %}
             <tr>
@@ -116,4 +122,5 @@
         {% endfor %}
         </tbody>
     </table>
+
 {% endblock %}

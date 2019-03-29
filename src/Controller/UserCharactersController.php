@@ -7,6 +7,7 @@ use App\Entity\UserCharacters;
 use App\Form\UserCharactersType;
 use App\Repository\CharactersRepository;
 use App\Repository\GameRepository;
+use App\Repository\RoleRepository;
 use App\Repository\UserCharactersRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,12 +22,13 @@ class UserCharactersController extends AbstractController
     /**
      * @Route("/", name="user_characters_index", methods={"GET"})
      */
-    public function index(UserCharactersRepository $userCharactersRepository, CharactersRepository $charactersRepository, GameRepository $gameRepository): Response
+    public function index(UserCharactersRepository $userCharactersRepository, CharactersRepository $charactersRepository, GameRepository $gameRepository,RoleRepository $roleRepository): Response
     {
         return $this->render('user_characters/index.html.twig', [
             'games' => $gameRepository->findAll(),
             'user_characters' => $userCharactersRepository->findAll(),
-            'characters' => $charactersRepository->findAll()
+            'characters' => $charactersRepository->findAll(),
+            'roles' => $roleRepository->findAll()
         ]);
     }
 
