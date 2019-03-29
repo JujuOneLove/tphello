@@ -11,8 +11,8 @@
         <tr>
             <th>Id</th>
             <th>Name</th>
-            <th>actions</th>
             <th>Role</th>
+            <th>actions</th>
 
         </tr>
         </thead>
@@ -49,6 +49,8 @@
             <th>user</th>
             <th>CreatedAt</th>
             <th>Favorite</th>
+            <th>Character</th>
+            <th>Role</th>
             <th>actions</th>
         </tr>
         </thead>
@@ -56,9 +58,12 @@
         {% for user_character in user_characters %}
             <tr>
                 <td>{{ user_character.id }}</td>
-                <td>{{ user_character.user.username }}</td>
+                <td>{{ user_character.user }}</td>
                 <td>{{ user_character.createdAt ? user_character.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ user_character.favorite ? 'Yes' : 'No' }}</td>
+                <td>{{ user_character.characters }}</td>
+                <td>{{ user_character.characters.role }}</td>
+
                 {% if is_granted('ROLE_ADMIN') %}
 
                     <td>
