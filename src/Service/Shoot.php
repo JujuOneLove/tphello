@@ -17,29 +17,30 @@ class Shoot{
         if(!$game instanceof Game) {
             throw new InvalidArgumentException('Game must be set');
         }
-        $game->setAssassination($game->getAssassination()+1);
+        return $game->getAssassination()+1;
     }
 
     public function damage(Game $game){
         if(!$game instanceof Game) {
             throw new InvalidArgumentException('Game must be set');
         }
-        $game->setDamage($game->getDamage()+100);
+        return $game->getDamage()+100;
     }
 
-    public function shoot(Game $game = null){
+    public function shoot(Game $game = null, $chance = null){
 
         if(!$game instanceof Game) {
             throw new InvalidArgumentException('Game must be set');
         }else{
-            $chance = rand(0,100);
+            if($chance === null ) $chance = rand(0,100);
             if($chance<=20){
-                $this->kill($game);
+                $game->setAssassination($this->kill($game));
+                $game->setDamage($this->damage($game));
             }elseif ($chance>20 && $chance<=70){
-                $this->damage($game);
+                $game->setDamage($this->damage($game));
             }
         }
-        return true;
+        return $game;
     }
 
 }
