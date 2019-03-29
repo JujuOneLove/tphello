@@ -29,14 +29,11 @@ class UserCharactersController extends AbstractController
         $user = $token->getToken()->getUser();
         $userCharacters = $userCharactersRepository->findby(array('user' => $user));
         $game = $gameRepository->findby(array('userCharacters' => $userCharacters));
-        $characters = [];
-        foreach ($userCharacters as $uc){
-            $characters [] = $uc->getCharacters();
-        }
+
         return $this->render('user_characters/index.html.twig', [
             'games' => $game,
             'user_characters' => $userCharacters,
-            'characters' => $characters,
+            'characters' => $charactersRepository->findAll(),
         ]);
     }
 
